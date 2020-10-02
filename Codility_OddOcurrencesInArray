@@ -1,0 +1,88 @@
+/*
+
+A non-empty array A consisting of N integers is given. The array contains an odd number of elements, and each element of the array can be paired with another element that has the same value, except for one element that is left unpaired.
+
+For example, in array A such that:
+  A[0] = 9  A[1] = 3  A[2] = 9
+  A[3] = 3  A[4] = 9  A[5] = 7
+  A[6] = 9
+
+        the elements at indexes 0 and 2 have value 9,
+        the elements at indexes 1 and 3 have value 3,
+        the elements at indexes 4 and 6 have value 9,
+        the element at index 5 has value 7 and is unpaired.
+
+Write a function:
+
+    int solution(vector<int> &A);
+
+that, given an array A consisting of N integers fulfilling the above conditions, returns the value of the unpaired element.
+
+For example, given array A such that:
+  A[0] = 9  A[1] = 3  A[2] = 9
+  A[3] = 3  A[4] = 9  A[5] = 7
+  A[6] = 9
+
+the function should return 7, as explained in the example above.
+
+Write an efficient algorithm for the following assumptions:
+
+        N is an odd integer within the range [1..1,000,000];
+        each element of array A is an integer within the range [1..1,000,000,000];
+        all but one of the values in A occur an even number of times.
+
+*/
+#include <vector>
+#include <algorithm>
+#include <iostream>
+#include <assert.h>
+
+using namespace std;
+
+/*100% https://app.codility.com/demo/results/training7ARN8Y-8K8/*/
+int solution(vector<int> &A) {
+    unsigned int N = A.size();
+    unsigned long long int sum = 0;
+
+    for (auto i=0u; i<N; i++)
+        // If a A XOR A = 0 so, iterating through the container will cancel all the repeated ones
+        // leaving the unique one alone.
+        sum ^= A[i];
+
+    return sum;
+}
+
+// int solution(vector<int> &A) {
+//     vector<int> eV;
+//     int res=0;
+//
+//     for(auto e: A)
+//     {
+//         /* Si no se ha analizado*/
+//         if(0u == count(eV.begin(),eV.end(),e))
+//         {
+//             if(1u == count(A.begin(),A.end(),e))
+//             {
+//                 res = e;
+//                 break;
+//             }
+//             else
+//                 eV.push_back(e);
+//         }
+//     }
+//     return res;
+// }
+
+
+int main()
+{
+    vector<int> v= {9,3,9,3,9,7,9};
+    int result=0;
+
+    result=solution(v);
+    cout<<result<<endl;
+    assert(result==7u);
+    v.clear();
+
+    return 0;
+}
